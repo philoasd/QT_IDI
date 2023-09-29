@@ -2,6 +2,8 @@
 #include <pylon/PylonIncludes.h>
 #include <vector>
 #include <string>
+#include <functional>
+#include <iostream>
 #include "BaseCmaera.h"
 
 using namespace Pylon;
@@ -9,7 +11,7 @@ using namespace std;
 
 class __declspec(dllexport) BaslerCamera : public BaseCmaera
 {
-	public:
+public:
 	BaslerCamera();
 	vector<string> GetCameraDevices();
 	void ConnectedCamera(int serialNumber);
@@ -17,9 +19,12 @@ class __declspec(dllexport) BaslerCamera : public BaseCmaera
 	void StartCapture(int flag);
 	void StopCapture();
 
+public:
+
+
 private:
-	DeviceInfoList_t Devices;
 	CInstantCamera Camera;
+	DeviceInfoList_t Devices;
 };
 
 /// <summary>
@@ -28,11 +33,11 @@ private:
 class ImageEventHandler : public CImageEventHandler
 {
 public:
-	virtual void OnImageGrabbed(CInstantCamera& camera, const CGrabResultPtr& ptrGrabResult) 
+	virtual void OnImageGrabbed(CInstantCamera& camera, const CGrabResultPtr& ptrGrabResult)
 	{
 		if (ptrGrabResult->GrabSucceeded())
 		{
-			cout << "ImageEventHandler" << endl;
+			
 		}
 	}
 };

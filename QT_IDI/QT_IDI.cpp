@@ -1,21 +1,25 @@
-#include "QT_IDI.h"
+﻿#include "QT_IDI.h"
 
 QT_IDI::QT_IDI(QWidget* parent)
 	: QMainWindow(parent)
 {
 	ui.setupUi(this);
 
-	m_Camera = std::make_shared<BaslerCamera>();
+	m_Camera = std::make_shared<BaslerCamera>();// 实例化相机对象
+	m_ImageEventHandler = std::make_shared<ImageEventHandler>();// 实例化相机回调函数对象
 	InitCameraDevices();
 }
 
 QT_IDI::~QT_IDI()
-{}
+{
+	
+}
 
 void QT_IDI::on_pushButton_ConnectedCamera_clicked()
 {
 	int serialNumber = ui.comboBox_CameraDevices->currentIndex();
 	m_Camera->ConnectedCamera(serialNumber);
+
 }
 
 void QT_IDI::on_pushButton_DisConnectedCamera_clicked()
@@ -45,7 +49,10 @@ void QT_IDI::InitCameraDevices()
 	}
 }
 
-void QT_IDI::ShowImage(const CGrabResultData ptrGrabResult)
+void QT_IDI::ShowImage(const CGrabResultPtr& ptrGrabResult)
 {
+	if (ptrGrabResult->GrabSucceeded())
+	{
 
+	}
 }
