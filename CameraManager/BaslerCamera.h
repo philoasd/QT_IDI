@@ -13,11 +13,11 @@ class __declspec(dllexport) BaslerCamera : public BaseCmaera
 {
 public:
 	BaslerCamera();
-	vector<string> GetCameraDevices();
-	void ConnectedCamera(int serialNumber);
-	void DisConnectedCamera();
-	void StartCapture(int flag);
-	void StopCapture();
+	vector<string> GetCameraDevices() override;
+	void ConnectedCamera(int serialNumber) override;
+	void DisConnectedCamera() override;
+	void StartCapture(int flag) override;
+	void StopCapture() override;
 
 public:
 
@@ -33,7 +33,7 @@ private:
 class ImageEventHandler : public CImageEventHandler
 {
 public:
-	virtual void OnImageGrabbed(CInstantCamera& camera, const CGrabResultPtr& ptrGrabResult)
+	virtual void OnImageGrabbed(CInstantCamera& camera, const CGrabResultPtr& ptrGrabResult) override
 	{
 		if (ptrGrabResult->GrabSucceeded())
 		{
