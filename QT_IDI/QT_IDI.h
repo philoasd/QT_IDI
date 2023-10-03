@@ -5,7 +5,7 @@
 #include <memory>
 
 #include <BaslerCamera.h>
-#include <BaseCmaera.h>
+//#include <BaseCmaera.h>
 #include <pylon/PylonIncludes.h>
 
 
@@ -25,8 +25,9 @@ private slots:
 
 private:
 	Ui::QT_IDIClass ui;
-	std::shared_ptr<BaseCmaera> m_Camera;// 相机对象
+	std::shared_ptr<BaslerCamera> m_Camera;// 相机对象
 	std::shared_ptr<ImageEventHandler> m_ImageEventHandler;// 相机回调函数对象
+	ImageEventHandler::ImageCallback callback;// 相机回调函数
 private:
 	void InitCameraDevices();// 初始化相机设备
 	void ShowImage(const CGrabResultPtr& ptrGrabResult);// 显示图像

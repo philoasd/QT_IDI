@@ -26,10 +26,22 @@ void BaslerCamera::ConnectedCamera(int serialNumber)
 	if (serialNumber >= 0) {
 		// 连接相机
 		Camera.Attach(CTlFactory::GetInstance().CreateDevice(Devices[serialNumber]));
+	}
+}
 
-		// 注册相机回调函数
-		Camera.RegisterImageEventHandler(new ImageEventHandler, RegistrationMode_Append, Cleanup_Delete);
-		Camera.GrabCameraEvents = true;
+void BaslerCamera::RegisterImageEvent(ImageEventHandler* imageEventHandler)
+{
+	Camera.RegisterImageEventHandler(imageEventHandler, RegistrationMode_Append, Cleanup_Delete);
+	Camera.GrabCameraEvents = true;
+}
+
+void BaslerCamera::DeregisterImageEvent(ImageEventHandler* imageEventHandler)
+{
+	try {
+		Camera.DeregisterImageEventHandler(imageEventHandler);
+	}
+	catch (const GenericException& e) {
+		cerr << "Error: " << e.GetDescription() << endl;
 	}
 }
 
@@ -69,4 +81,9 @@ void BaslerCamera::StartCapture(int flag)
 void BaslerCamera::StopCapture()
 {
 	Camera.StopGrabbing();
+}
+
+void BaslerCamera::SaveImage(const string& path, const CGrabResultPtr& ptrGrabResult)
+{
+	CImagePersistence::Save(ImageFileFormat_Bmp, path.c_str(), ptrGrabResult);
 }
